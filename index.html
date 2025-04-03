@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="./style.css">
 
     <!-- Load PlayCanvas & Model Viewer from CDN -->
-    <script defer src="https://code.playcanvas.com/playcanvas-stable.min.js"></script>
-    <script defer src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script type="module">
+        import 'https://code.playcanvas.com/playcanvas-stable.min.js';
+        import 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
+    </script>
+    
 </head>
 <body>
     <!-- Loading Screen -->
