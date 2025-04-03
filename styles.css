@@ -1,0 +1,62 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .map {
+    flex: 1;
+    height: 100%;
+  }
+  
+  .viewer-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .viewer {
+    flex: 1;
+    background: #f0f0f0;
+  }
+  
+  #modelUpload {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .properties {
+    width: 300px;
+    padding: 10px;
+    background: #fff;
+    border-left: 1px solid #ccc;
+    overflow-y: auto;
+  }
+  
+  .properties label {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  .properties input, .properties select {
+    width: 100%;
+    padding: 5px;
+  }
+  
+  .properties button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .properties button:hover {
+    background: #0056b3;
+  }
