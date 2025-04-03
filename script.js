@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize the model viewer
-  const viewer = new pc.ModelViewer(document.getElementById('model-viewer-element'), {
+  // Initialize the viewer
+  const viewer = new pc.ModelViewer(document.getElementById('model-viewer'), {
       assetsPrefix: './models/',
       orbitSensitivity: 1.0,
       enableUi: true
@@ -8,24 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load initial model
   viewer.load('Kaplica_Zychlinskich.glb').then(() => {
-      console.log('Model loaded!');
+      console.log('Model loaded successfully');
+      // Set initial camera position
       viewer.camera.orbitYaw = -30;
       viewer.camera.orbitPitch = 75;
       viewer.camera.distance = 10;
+  }).catch(err => {
+      console.error('Error loading model:', err);
   });
 
-  // Example: Button to load another model
-  const loadModelButton = document.getElementById('load-other-model-button');
-  if (loadModelButton) {
-      loadModelButton.addEventListener('click', () => {
-          viewer.load('heritage_scan2.glb').then(() => {
-              console.log('New model loaded!');
-          });
+  // Model switching example
+  window.loadModel = (modelPath) => {
+      viewer.load(modelPath).catch(err => {
+          console.error('Error loading model:', err);
       });
-  }
-
-  // Error handling
-  viewer.on('error', (err) => {
-      console.error('Model loading error:', err);
-  });
+  };
 });
