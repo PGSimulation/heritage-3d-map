@@ -1,65 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heritage 3D Viewer</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-Zcn6bjR/8rzA0x1t5zL8GepR25OhGw9dcSkN2q8U30kCqXGNOs1qsS1Lofa1Q+8I+5X58GMBVBF6SiO/pfdymgA==" crossorigin="anonymous" />
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage 3D Map Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Leaflet CSS here if you use it -->
+    <!-- <link rel="stylesheet" href="./lib/leaflet/leaflet.css" /> -->
 </head>
 <body>
-  <div class="top-bar">
-    <h1>Heritage 3D Viewer</h1>
-    <select id="modelSelect"></select>
-    <input type="file" id="modelUpload" accept=".glb">
-  </div>
-  <div class="main-container">
-    <div class="sidebar">
-      <div class="section">
-        <label>Name: <input type="text" id="modelName" placeholder="Enter model name"></label>
-        <label>Tags: <input type="text" id="tags" placeholder="e.g., photogrammetry, heritage"></label>
-        <label>Category: 
-          <select id="category">
-            <option value="Cultural Heritage">Cultural Heritage</option>
-            <option value="Architecture">Architecture</option>
-            <option value="Nature">Nature</option>
-          </select>
-        </label>
-        <label>License: 
-          <select id="license">
-            <option value="CC BY">CC BY</option>
-            <option value="CC BY-NC">CC BY-NC</option>
-            <option value="Public Domain">Public Domain</option>
-          </select>
-        </label>
-      </div>
-      <div class="section">
-        <h3>Stats</h3>
-        <p>Triangles: <span id="trisCount">N/A</span></p>
-        <p>Vertices: <span id="vertexCount">N/A</span></p>
-      </div>
-      <div class="section">
-        <h3>Location</h3>
-        <button id="editCoords">Edit Coordinates</button>
-        <p>Lat: <span id="lat">N/A</span>, Lon: <span id="lon">N/A</span></p>
-      </div>
-      <div class="section">
-        <button id="downloadBtn">Download</button>
-        <p>Link: <a id="modelLink" href="#">N/A</a></p>
-        <button id="saveBtn">Save Changes</button>
-      </div>
+    <div id="app-container">
+        <div id="viewer-container">
+            <div id="loading-indicator">Loading Model...</div>
+            <!-- Canvas will be inserted here by script.js -->
+        </div>
+        <!-- Optional container for a 2D map -->
+        <!-- <div id="map-container"></div> -->
     </div>
-    <div id="viewer" class="viewer"></div>
-  </div>
-  <div id="mapModal" class="modal">
-    <div class="modal-content">
-      <span class="close">×</span>
-      <div id="map" class="map"></div>
-    </div>
-  </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-MXJekbFK7WZ5zMC2b3BziTBCXe3S3/5Wv4X3W5X62uAZdFyzQe1MZl7W2Mkd4w1tyxXJRLU8KvyHvb2lBwfSuoA==" crossorigin="anonymous"></script>
-  <script src="lib/three/three.min.js"></script>
-  <script type="module" src="script.js"></script>
+    <!-- GUI will be placed here (or inside viewer-container) by script.js -->
+    <div id="gui-container"></div>
+
+    <!-- Add Leaflet JS here if you use it -->
+    <!-- <script src="./lib/leaflet/leaflet.js"></script> -->
+
+    <!-- Use type="module" for modern Three.js imports -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>
