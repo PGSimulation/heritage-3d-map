@@ -1,17 +1,21 @@
+import { GLTFLoader } from './lib/three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from './lib/three/examples/jsm/controls/OrbitControls.js';
+
 // Model data (no hardcoded coordinates)
 const models = [
-  { name: "Heritage Scan 1", path: "models/Kaplica_Zychlinskich.glb", tags: ["photogrammetry", "heritage"], category: "Cultural Heritage", license: "CC BY" },
+  { name: "Heritage Scan 1", path: "models/heritage_scan1.glb", tags: ["photogrammetry", "heritage"], category: "Cultural Heritage", license: "CC BY" },
   { name: "Heritage Scan 2", path: "models/heritage_scan2.glb", tags: ["architecture"], category: "Architecture", license: "Public Domain" }
 ];
 
 let currentModel = models[0];
-const modelData = {}; // Store dynamic data like coordinates
+const modelData = {};
 
 // --- Three.js Setup ---
 let scene, camera, renderer, model, controls;
 function initThreeJS() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  scene.background = new THREE.Color(0x333333);
+  camera = new THREE.PerspectiveCamera(75, (window.innerWidth - 300) / (window.innerHeight - 50), 0.1, 1000);
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth - 300, window.innerHeight - 50);
   document.getElementById('viewer').appendChild(renderer.domElement);
@@ -22,32 +26,45 @@ function initThreeJS() {
   directionalLight.position.set(5, 10, 7.5);
   scene.add(directionalLight);
 
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
+  controls.screenSpacePanning = false;
+  controls.minDistance = 1;
+  controls.maxDistance = 100;
 
   camera.position.set(0, 2, 5);
+  controls.update();
   animate();
 }
 
 function loadModel(modelData) {
   if (model) scene.remove(model);
-  const loader = new THREE.GLTFLoader();
-  loader.load(modelData.path, (gltf) => {
-    model = gltf.scene;
-    scene.add(model);
+  const loader = new GLTFLoader();
+  loader.load(
+    modelData.path,
+    (gltf) => {
+      model = gltf.scene;
+      scene.add(model);
 
-    const box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const scale = 5 / maxDim;
-    model.scale.set(scale, scale, scale);
-    const center = box.getCenter(new THREE.Vector3());
-    model.position.sub(center.multiplyScalar(scale));
+      const box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const scale = 5 / maxDim;
+      model.scale.set(scale, scale, scale);
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.sub(center.multiplyScalar(scale));
 
-    updateProperties(modelData);
-    controls.reset();
-  });
+      updateProperties(modelData);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    },
+    undefined,
+    (error) => {
+      console.error('Error loading model:', error);
+      alert('Failed to load model. Check console for details.');
+    }
+  );
 }
 
 function updateProperties(modelData) {
@@ -58,12 +75,14 @@ function updateProperties(modelData) {
   document.getElementById('license').value = modelData.license;
 
   let tris = 0, vertices = 0;
-  model.traverse(obj => {
-    if (obj.isMesh) {
-      tris += obj.geometry.index ? obj.geometry.index.count / 3 : obj.geometry.attributes.position.count / 3;
-      vertices += obj.geometry.attributes.position.count;
-    }
-  });
+  if (model) {
+    model.traverse(obj => {
+      if (obj.isMesh) {
+        tris += obj.geometry.index ? obj.geometry.index.count / 3 : obj.geometry.attributes.position.count / 3;
+        vertices += obj.geometry.attributes.position.count;
+      }
+    });
+  }
   document.getElementById('trisCount').textContent = tris;
   document.getElementById('vertexCount').textContent = vertices;
 
@@ -137,8 +156,13 @@ closeBtn.onclick = () => {
 };
 
 // --- Initialize ---
-initThreeJS();
-loadModel(models[0]);
+document.addEventListener('DOMContentLoaded', () => {
+  initThreeJS();
+  loadModel(models[0]);
+});
+
+// --- Event Listeners ---
+document.getElementById('modelUpload').addEventListener('change', handleUpload);
 
 // Resize handler
 window.addEventListener('resize', () => {
