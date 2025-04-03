@@ -5,14 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heritage 3D Map</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- PlayCanvas dependencies -->
-    <script src="https://code.playcanvas.com/playcanvas-latest.js"></script>
-    <script src="https://code.playcanvas.com/model-viewer/latest/model-viewer.js"></script>
+    <!-- Load PlayCanvas from jsDelivr CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/playcanvas@1.59.0/build/playcanvas.min.js"></script>
+    <!-- Load Model Viewer from fixed version -->
+    <script src="https://cdn.jsdelivr.net/gh/playcanvas/model-viewer@1.0.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
     <div id="app-container">
         <div id="model-viewer"></div>
+        <!-- Optional: Add loading indicator -->
+        <div id="loading" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">
+            Loading model...
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const viewer = new pc.ModelViewer(document.getElementById('model-viewer'), {
+                    assetsPrefix: './models/',
+                    orbitSensitivity: 1.0,
+                    enableUi: true,
+                    onLoad: function() {
+                        // Hide loading indicator when model loads
+                        document.getElementById('loading').style.display = 'none';
+                    }
+                });
+
+                // Load initial model
+                viewer.load('Kaplica_Zychlinskich.glb')
+                    .then(function() {
+                        console.log('Model loaded successfully');
+                        viewer.camera.orbitYaw = -30;
+                        viewer.camera.orbitPitch = 75;
+                        viewer.camera.distance = 10;
+                    })
+                    .catch(function(err) {
+                        console.error('Error loading model:', err);
+                        document.getElementById('loading').textContent = 'Error loading model';
+                    });
+
+            } catch (error) {
+                console.error('PlayCanvas initialization error:', error);
+                document.getElementById('loading').textContent = 'Initialization error';
+            }
+        });
+    </script>
 </body>
 </html>
