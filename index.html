@@ -3,43 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heritage 3D Map</title>
+  <title>Heritage 3D Viewer</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <div id="map" class="map"></div>
-    <div class="viewer-container">
-      <div id="viewer" class="viewer"></div>
-      <input type="file" id="modelUpload" accept=".glb" onchange="handleUpload(event)">
+  <div class="top-bar">
+    <h1>Heritage 3D Viewer</h1>
+    <input type="file" id="modelUpload" accept=".glb" onchange="handleUpload(event)">
+  </div>
+  <div class="main-container">
+    <div class="sidebar">
+      <h2 id="modelName">Model Name</h2>
+      <div class="section">
+        <label>Tags: <input type="text" id="tags" placeholder="e.g., photogrammetry, heritage"></label>
+        <label>Category: 
+          <select id="category">
+            <option value="Cultural Heritage">Cultural Heritage</option>
+            <option value="Architecture">Architecture</option>
+            <option value="Nature">Nature</option>
+          </select>
+        </label>
+        <label>License: 
+          <select id="license">
+            <option value="CC BY">CC BY</option>
+            <option value="CC BY-NC">CC BY-NC</option>
+            <option value="Public Domain">Public Domain</option>
+          </select>
+        </label>
+      </div>
+      <div class="section">
+        <h3>Stats</h3>
+        <p>Triangles: <span id="trisCount">N/A</span></p>
+        <p>Vertices: <span id="vertexCount">N/A</span></p>
+      </div>
+      <div class="section">
+        <h3>Location</h3>
+        <button id="editCoords">Edit Coordinates</button>
+        <p>Lat: <span id="lat">N/A</span>, Lon: <span id="lon">N/A</span></p>
+      </div>
+      <div class="section">
+        <button id="downloadBtn">Download</button>
+        <p>Link: <a id="modelLink" href="#">N/A</a></p>
+      </div>
     </div>
-    <div class="properties">
-      <h3>Model Properties</h3>
-      <label>Name: <input type="text" id="modelName" disabled></label>
-      <label>Tags: <input type="text" id="tags" placeholder="e.g., photogrammetry, heritage"></label>
-      <label>Category: 
-        <select id="category">
-          <option value="Cultural Heritage">Cultural Heritage</option>
-          <option value="Architecture">Architecture</option>
-          <option value="Nature">Nature</option>
-        </select>
-      </label>
-      <label>License: 
-        <select id="license">
-          <option value="CC BY">CC BY</option>
-          <option value="CC BY-NC">CC BY-NC</option>
-          <option value="Public Domain">Public Domain</option>
-        </select>
-      </label>
-      <label>Coordinates: 
-        <input type="number" id="lat" step="0.0001" placeholder="Latitude">
-        <input type="number" id="lon" step="0.0001" placeholder="Longitude">
-      </label>
-      <p>Triangles: <span id="trisCount">N/A</span></p>
-      <p>Vertices: <span id="vertexCount">N/A</span></p>
-      <button id="downloadBtn">Download Model</button>
-      <p>Model Link: <a id="modelLink" href="#">N/A</a></p>
+    <div id="viewer" class="viewer"></div>
+  </div>
+  <div id="mapModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="map" class="map"></div>
     </div>
   </div>
 
