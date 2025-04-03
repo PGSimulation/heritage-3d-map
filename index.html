@@ -4,18 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Heritage 3D Viewer</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-Zcn6bjR/8rzA0x1t5zL8GepR25OhGw9dcSkN2q8U30kCqXGNOs1qsS1Lofa1Q+8I+5X58GMBVBF6SiO/pfdymgA==" crossorigin="anonymous" />
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="top-bar">
     <h1>Heritage 3D Viewer</h1>
-    <input type="file" id="modelUpload" accept=".glb" onchange="handleUpload(event)">
+    <select id="modelSelect"></select>
+    <input type="file" id="modelUpload" accept=".glb">
   </div>
   <div class="main-container">
     <div class="sidebar">
-      <h2 id="modelName">Model Name</h2>
       <div class="section">
+        <label>Name: <input type="text" id="modelName" placeholder="Enter model name"></label>
         <label>Tags: <input type="text" id="tags" placeholder="e.g., photogrammetry, heritage"></label>
         <label>Category: 
           <select id="category">
@@ -45,21 +46,20 @@
       <div class="section">
         <button id="downloadBtn">Download</button>
         <p>Link: <a id="modelLink" href="#">N/A</a></p>
+        <button id="saveBtn">Save Changes</button>
       </div>
     </div>
     <div id="viewer" class="viewer"></div>
   </div>
   <div id="mapModal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
+      <span class="close">×</span>
       <div id="map" class="map"></div>
     </div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://unpkg.com/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://unpkg.com/three@0.134.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="script.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-MXJekbFK7WZ5zMC2b3BziTBCXe3S3/5Wv4X3W5X62uAZdFyzQe1MZl7W2Mkd4w1tyxXJRLU8KvyHvb2lBwfSuoA==" crossorigin="anonymous"></script>
+  <script src="lib/three/three.min.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,17 +1,10 @@
 import { GLTFLoader } from './lib/three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from './lib/three/examples/jsm/controls/OrbitControls.js';
 
-// Model data (no hardcoded coordinates)
-const models = [
-  { name: "Heritage Scan 1", path: "models/heritage_scan1.glb", tags: ["photogrammetry", "heritage"], category: "Cultural Heritage", license: "CC BY" },
-  { name: "Heritage Scan 2", path: "models/heritage_scan2.glb", tags: ["architecture"], category: "Architecture", license: "Public Domain" }
-];
-
-let currentModel = models[0];
-const modelData = {};
-
 // --- Three.js Setup ---
 let scene, camera, renderer, model, controls;
+let currentModel = null;
+
 function initThreeJS() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x333333);
@@ -69,10 +62,10 @@ function loadModel(modelData) {
 
 function updateProperties(modelData) {
   currentModel = modelData;
-  document.getElementById('modelName').textContent = modelData.name;
-  document.getElementById('tags').value = modelData.tags.join(', ');
-  document.getElementById('category').value = modelData.category;
-  document.getElementById('license').value = modelData.license;
+  document.getElementById('modelName').value = modelData.name || '';
+  document.getElementById('tags').value = modelData.tags ? modelData.tags.join(', ') : '';
+  document.getElementById('category').value = modelData.category || 'Cultural Heritage';
+  document.getElementById('license').value = modelData.license || 'CC BY';
 
   let tris = 0, vertices = 0;
   if (model) {
@@ -91,82 +84,6 @@ function updateProperties(modelData) {
   document.getElementById('lon').textContent = coords.lon;
 
   const link = `${window.location.origin}/?model=${encodeURIComponent(modelData.path)}`;
-  const linkElement = document.getElementById('modelLink');
-  linkElement.href = link;
-  linkElement.textContent = link;
+  const linkElement = document.getElement...
 
-  document.getElementById('downloadBtn').onclick = () => {
-    const a = document.createElement('a');
-    a.href = modelData.path;
-    a.download = `${modelData.name}.glb`;
-    a.click();
-  };
-}
-
-function handleUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const url = URL.createObjectURL(file);
-    const newModel = { name: file.name, path: url, tags: [], category: "Cultural Heritage", license: "CC BY" };
-    models.push(newModel);
-    loadModel(newModel);
-  }
-}
-
-function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
-}
-
-// --- Map Editor ---
-const mapModal = document.getElementById('mapModal');
-const closeBtn = document.getElementsByClassName('close')[0];
-let map, marker;
-
-document.getElementById('editCoords').onclick = () => {
-  mapModal.style.display = 'block';
-  if (!map) {
-    map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-  }
-
-  const coords = currentModel.coords || { lat: 0, lon: 0 };
-  if (marker) marker.remove();
-  marker = L.marker([coords.lat, coords.lon], { draggable: true }).addTo(map);
-  map.setView([coords.lat, coords.lon], 10);
-
-  marker.on('dragend', () => {
-    const latlng = marker.getLatLng();
-    currentModel.coords = { lat: latlng.lat.toFixed(4), lon: latlng.lng.toFixed(4) };
-    updateProperties(currentModel);
-  });
-
-  map.on('click', (e) => {
-    marker.setLatLng(e.latlng);
-    currentModel.coords = { lat: e.latlng.lat.toFixed(4), lon: e.latlng.lng.toFixed(4) };
-    updateProperties(currentModel);
-  });
-};
-
-closeBtn.onclick = () => {
-  mapModal.style.display = 'none';
-};
-
-// --- Initialize ---
-document.addEventListener('DOMContentLoaded', () => {
-  initThreeJS();
-  loadModel(models[0]);
-});
-
-// --- Event Listeners ---
-document.getElementById('modelUpload').addEventListener('change', handleUpload);
-
-// Resize handler
-window.addEventListener('resize', () => {
-  camera.aspect = (window.innerWidth - 300) / (window.innerHeight - 50);
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth - 300, window.innerHeight - 50);
-});
+Something went wrong, please try again.
