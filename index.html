@@ -3,28 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heritage 3D Map Viewer</title>
+    <title>Heritage Model Viewer</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Add Leaflet CSS here if you use it -->
-    <!-- <link rel="stylesheet" href="./lib/leaflet/leaflet.css" /> -->
+    <!-- Add PlayCanvas dependencies -->
+    <script src="https://code.playcanvas.com/playcanvas-latest.js"></script>
+    <script src="https://code.playcanvas.com/model-viewer/latest/model-viewer.js"></script>
 </head>
 <body>
     <div id="app-container">
-        <div id="viewer-container">
-            <div id="loading-indicator">Loading Model...</div>
-            <!-- Canvas will be inserted here by script.js -->
-        </div>
-        <!-- Optional container for a 2D map -->
-        <!-- <div id="map-container"></div> -->
+        <!-- PlayCanvas Model Viewer container -->
+        <div id="model-viewer-element"></div>
     </div>
 
-    <!-- GUI will be placed here (or inside viewer-container) by script.js -->
-    <div id="gui-container"></div>
-
-    <!-- Add Leaflet JS here if you use it -->
-    <!-- <script src="./lib/leaflet/leaflet.js"></script> -->
-
-    <!-- Use type="module" for modern Three.js imports -->
-    <script type="module" src="script.js"></script>
+    <!-- Your custom script -->
+    <script src="script.js"></script>
 </body>
 </html>
