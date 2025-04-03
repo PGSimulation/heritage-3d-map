@@ -1,10 +1,10 @@
 // --- Imports ---
 // Adjust paths if your three.module.js is elsewhere
-import * as THREE from './lib/three/three.module.js';
-import { OrbitControls } from './lib/three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from './lib/three/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from './libs/three/three.module.js';
+import { OrbitControls } from './libs/three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from './libs/three/examples/jsm/loaders/GLTFLoader.js';
 // Optional: Import GUI if you placed the file
-import { GUI } from './lib/three/examples/jsm/libs/lil-gui.module.min.js';
+import { GUI } from './libs/three/examples/jsm/libs/lil-gui.module.min.js';
 // Optional: Import RGBELoader if you have HDRs and placed the file
 // import { RGBELoader } from './lib/three/examples/jsm/loaders/RGBELoader.js';
 
