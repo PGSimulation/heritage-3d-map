@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage 3D Map</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- Load PlayCanvas & Model Viewer from CDN -->
+    <script defer src="https://code.playcanvas.com/playcanvas-stable.min.js"></script>
+    <script defer src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-overlay">
+        <div id="loading-spinner"></div>
+        <div id="loading-text">Loading 3D Viewer...</div>
+    </div>
+
+    <!-- 3D Model Viewer -->
+    <div id="app-container">
+        <model-viewer 
+            src="./models/Kaplica_Zychlinskich.glb"
+            ar 
+            auto-rotate 
+            camera-controls
+            style="width: 100%; height: 100vh;">
+        </model-viewer>
+    </div>
+</body>
+</html>
