@@ -1,0 +1,12 @@
+{
+  "name": "heritage-3d-map",
+  "version": "1.0.0",
+  "description": "A 3D map application for heritage sites.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^6.2.4"
+  }
+}
