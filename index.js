@@ -31,12 +31,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(() => {
                 // Check if the model loaded successfully
                 if (viewer.model) {
-                    loadingOverlay.style.display = 'none'; // Hide the overlay on success
-
+                    requestAnimationFrame(() => {
+                        loadingOverlay.style.display = 'none'; // Hide the overlay on success
+                    });
+        
                     viewer.camera.orbitYaw = -30;
                     viewer.camera.orbitPitch = 75;
                     viewer.camera.distance = 10;
-
+        
                     // Example: Add an event listener for a click on the model
                     viewer.scene.on('click', (event) => {
                         console.log('Model clicked!', event);
